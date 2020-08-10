@@ -55,6 +55,61 @@ module.exports = {
 
     },
 
+    getCoursesByStudentId: function (request, response) {
+        StudentCourses.find({ id: request.body.studentId }).exec(function (Error, courses) {
+            if (Error) {
+                sails.log(Error);
+            }
+            response.send({ courses: courses });
+        })
+    },
+
+    insertCourse: function (req, res) {
+        courseId = req.body.courseId
+        courseName = req.body.courseName
+        instructId = req.body.instructId
+        Course.create(
+            { id: instructId, courseId: courseId, courseName: courseName }
+        ).exec(async (err, success) => {
+            if (err) {
+                returnres.serverError(err);
+            }
+            varmessage = "Instrutor Added for course:" + courseId;
+            res.send({ message: message });
+        });
+    },
+
+    deleteCourse: function (request, response) {
+        courseId = request.body.courseId;
+        Course.destroy({ courseId: courseId }).exec(function (error, res) {
+            if (error) {
+                returnresponse.serverError(error);
+            }
+        })
+        Announcement.destroy({ courseId: courseId }).exec(function (error, res) {
+            if (error) {
+                returnresponse.serverError(error);
+            }
+        })
+        StudentCourses.destroy({ courseId: courseId }).exec(function (error, res) {
+            if (error) {
+                returnresponse.serverError(error);
+            }
+            response.send("All content related to the course deleted");
+        })
+    },
+
+    deleteStudent: function (request, response) {
+        courseId = request.body.courseId;
+        studentId = request.body.studentId;
+        StudentCourses.destroy({ courseId: courseId, id: studentId }).exec(function (error, res) {
+            if (error) {
+                returnresponse.serverError(error);
+            }
+            response.send("Courses Dropped");
+        })
+    },
+
     addStudentForm: function (request, response) {
         console.log("LOGGEDIN: ", request.session.userId)
         if (typeof request.session.userId === 'undefined') {
