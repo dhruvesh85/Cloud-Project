@@ -1,0 +1,16 @@
+branch-defaults:
+  default:
+    environment: instructor-dev
+environment-defaults:
+  instructor-dev:
+    branch: null
+    repository: null
+global:
+  application_name: instructor
+  default_platform: Docker running on 64bit Amazon Linux
+  default_region: us-east-1
+  instance_profile: null
+  platform_name: null
+  platform_version: null
+  profile: null
+  workspace_type: Application
