@@ -196,6 +196,42 @@ module.exports = {
     });
   },
 
+  assignInstructorForm: function (req, res) {
+    if (typeof req.session.userId == "undefined") {
+      return res.view("pages/userNotLoggedIn");
+    }
+    var courseId = req.param("courseId");
+    var courseName = req.param("courseName");
+    console.log(
+      "In assignInstructor courseId: " + courseId + " coursename: " + courseName
+    );
+    res.view("pages/assignInstructor", {
+      courseId: courseId,
+      courseName: courseName,
+    });
+  },
+ 
+  assignInstructor: async function (req, res) {
+    courseId = req.body.courseId;
+    courseName = req.body.courseName;
+    instructorId = req.body.instructorId;
+    var rp = require("request-promise");
+    var option = {
+      method: "post",
+      uri: "http://instructor-dev.us-east-1.elasticbeanstalk.com/insertCourse",
+      body: {
+        courseName: courseName,
+        courseId: courseId,
+        instructId: instructorId,
+      },
+      json: true,
+    };
+    await rp(option).then(async function (response) {
+      sails.log("Instructor assign to course ", response);
+      res.redirect("/getCourses");
+    });
+  },
+
   updateCourseForm: function (req, res) {
     if (typeof req.session.userId == "undefined") {
       return res.view("pages/userNotLoggedIn");
