@@ -17,7 +17,43 @@ const { setMaxListeners } = require('process');
 module.exports = {
 
 
+    login: function (request, response) {
+        let password = request.body.password;
+        Csv.findOne({ email: request.body.email }).exec(function (err, result) {
+            if (err || password != result.password) {
+                sails.log(err);
+            }
+            else {
+                console.log(result.id)
+                request.session.userId = result.id;
+                response.redirect("/getCoursesById");
+            }
+        })
 
+    },
+
+    logout: function (req, res) {
+        console.log("USER LOGOUT : ", req.session.userId);
+        req.session.destroy(function (err) {
+            res.redirect("/");
+        });
+    },
+
+    registerInstructor: function (request, response) {
+        Csv.create({
+            id: request.body.id, firstname: request.body.firstname, lastname: request.body.lastname,
+            email: request.body.email, password: request.body.password
+        }).exec(function (err, Csv) {
+            if (err) {
+                sails.log(err);
+                response.send("Instructor not inserted successfully");
+            }
+            else {
+                response.redirect("/")
+            }
+        })
+
+    },
 
     addStudentForm: function (request, response) {
         console.log("LOGGEDIN: ", request.session.userId)
