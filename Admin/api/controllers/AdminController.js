@@ -61,7 +61,110 @@ module.exports = {
       });
   },
 
-  
+  updateAvailableSeats: async function (req, res) {
+    var courseId = req.body.courseId;
+    var availableSeats = req.body.availableSeats;
+    var label = req.body.label;
+    var connectionDetails = {
+      host: "cloudproject.ctbnbdx7vmpq.us-east-1.rds.amazonaws.com",
+      user: "deep",
+      password: "deep6844",
+      database: "project_admin",
+      port: "3306",
+      ssl: true,
+    };
+
+    var connection = mysql.createConnection(connectionDetails);
+    await connection.connect(async function (err) {
+      if (err) {
+        console.error("Error while connection DB: ", err);
+      }
+      else{
+        console.log("connected to database");
+      }
+    });
+
+    try {
+      var begin = `XA START '${label}'`;
+      var end = `XA END '${label}'`;
+      var prepare = `XA PREPARE '${label}'`;
+      var roll = `XA ROLLBACK '${label}'`;
+      var commit = `XA COMMIT '${label}'`;
+
+      console.info("Transaction begin");
+      connection.query(begin, function (err, response) {
+        if (err) {
+          console.error("BEGIN ERROR: ", err);
+          connection.destroy();
+          return res.send("beginerror");
+        } else {
+          console.info("BEGIN SUCESS");
+        }
+      });
+
+      console.info("Statements adding to Transactions");
+      const updateQuery = `update course SET availableSeats =${availableSeats} where courseId = '${courseId}' `;
+      console.log(updateQuery);
+      connection.query(updateQuery, function (err, response) {
+        if (err) {
+          console.error("UPDATE ERROR: ", err);
+          connection.destroy();
+          return res.send("updateerror");
+        } else {
+          console.info("SUCESSFUL UPDATE RESPONSE", response);
+        }
+      });
+
+      console.info("Transaction End");
+      connection.query(end, function (err, response) {
+        if (err) {
+          console.error("END ERROR: ", err);
+          connection.destroy();
+          return res.send("enderror");
+        } else {
+          console.log("END SUCCESS");
+        }
+      });
+      
+      console.info("Transaction Prepared");
+      connection.query(prepare, function (err, response) {
+        if (err) {
+          console.error("PREPARE ERROR: ", err);
+          connection.destroy();
+          return res.send("preparederror");
+        }else{
+          console.log("PREPARED SUCCESS");
+        }
+      });
+    
+      console.info("Trying to Commit Transaction");
+      await connection.query(commit, async function (err, success) {
+        if (err) {
+          console.error("COMMIT ERROR: ", err);
+          //try to rollback
+          console.info("Trying to Rollback Transaction Since it was prepared already");
+          await connection.query(roll, async function (err, success) {
+            if (err) {
+              console.error("ROLL ERROR: ", err);
+              connection.destroy();
+              return res.send("unsuccessfulrollback");
+            } else {
+              console.log("ROLL RESPONSE: ", success);
+              connection.destroy();
+              return res.send("rollback");
+            }
+          });
+        }else{
+          connection.destroy();
+          return res.send("commit");
+        }
+      });
+    
+    }catch (err) {
+      sails.log("LAST CATCH ERROR", err);
+      return res.send("unprepared");
+    }
+  },
 
   insertCourse: function (req, res) {
     if (typeof req.session.userId == "undefined") {
