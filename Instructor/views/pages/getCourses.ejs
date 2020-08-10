@@ -1,0 +1,56 @@
+<style>
+    table,
+    th,
+    td {
+        padding: 10px;
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+
+    table {
+        margin: 5px auto;
+    }
+
+    form {
+        display: inline-block;
+    }
+
+    h4 {
+        text-align: center;
+    }
+
+    .container {
+        margin-top: 15px;
+    }
+</style>
+
+<div class="container">
+    <h4>Course</h4>
+    <br>
+    <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th> Course Id</th>
+                <th> Course Name</th>
+                <th> Action </th>
+            </tr>
+        </thead>
+        <tbody>
+            <% courses.forEach(function(course){ %>
+            <tr>
+                <td><%= course.courseId %></td>
+                <td><%= course.courseName %></td>
+                <td>
+                    <form method="POST" action="/addStudentForm/<%= course.courseId %>">
+                        <button class=" btn btn-primary disable">Add Students</button>
+                    </form>
+                    <form method="POST" action="/addAnnouncementForm/<%= course.courseId %>">
+                        <button class=" btn btn-primary disable">Add Announcement</button>
+                    </form>
+                </td>
+            </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</div>
+</body>

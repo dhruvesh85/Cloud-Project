@@ -1,0 +1,19 @@
+<html>
+
+<body>
+    <h1>CONFIRM OPERATION:</h1>
+    <form action="/sendConfirmation" method="POST">
+        <input type="hidden" value="commit" id="confirm" name="confirm">
+        <input type="hidden" value="<%= labelToSend %>" id="labelToSend" name="labelToSend">
+        <input type="hidden" value="<%= label %>" id="label" name="label">
+        <button type="submit">CONFIRM</button>
+    </form>
+    <form action="/sendConfirmation" method="POST">
+        <input type="hidden" value="rollback" id="confirm" name="confirm">
+        <input type="hidden" value="<%= labelToSend %>" id="labelToSend" name="labelToSend">
+        <input type="hidden" value="<%= label %>" id="label" name="label">
+        <button type="submit">ROLLBACK</button>
+    </form>
+</body>
+
+</html>

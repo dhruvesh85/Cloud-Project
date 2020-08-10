@@ -1,0 +1,26 @@
+<style>
+    .container {
+        margin: auto;
+        margin-top: 25px;
+        border: 1px solid black;
+    }
+</style>
+<div class="container">
+    <h2>Add Student</h2>
+    <form action="/insertcsv" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="courseId">CourseId</label>
+            <input type="text" class="form-control" name="courseId" id="courseId" placeholder="Enter CourseId" required
+                value="<%= courseId%>" readonly="readonly">
+        </div>
+        <div>
+            Please upload CSV file of Students:
+            <input type="file" name="csvfile" id="csvfile" required />
+            <br>
+            <div class="form-group">
+                <button class="btn btn-primary">Upload File</button>
+            </div>
+        </div>
+    </form>
+
+</div>

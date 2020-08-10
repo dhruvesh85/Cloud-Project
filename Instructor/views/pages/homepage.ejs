@@ -1,0 +1,22 @@
+<html>
+
+<body>
+  <h1>INSTRUCTOR HOMEPAGE</h1>
+  <form action="/insertcsv" method="post" enctype="multipart/form-data">
+    Please upload CSV file of Students:
+    <input type="file" name="csvfile" id="csvfile" />
+    <br>
+    <button type="submit"> Upload File</button>
+  </form>
+
+  <br><br>
+  <form action="/navregister" method="GET">
+    <input type="submit" value="Register">
+  </form>
+  <br>
+  <form action="/announcement" method="GET">
+    <input type="submit" value="Announcement">
+  </form>
+</body>
+
+</html>

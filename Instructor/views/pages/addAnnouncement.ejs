@@ -1,0 +1,22 @@
+<body>
+    <h1> Add Announcement</h1>
+    <form action="/insertAnnouncement" method="POST">
+
+        <div class="form-group">
+            <label for="courseId">Course Id</label>
+            <input type="text" class="form-control" name="courseId" id="courseId" placeholder="Enter CourseId" required
+                value="<%= courseId%>" readonly="readonly">
+        </div>
+
+        <div class="form-group">
+            <label for="announcement">Announcement</label>
+            <input type="text" class="form-control" name="announcement" id="announcement"
+                placeholder="Enter announcement" required>
+        </div>
+
+        <div class="form-group">
+            <button class="btn btn-primary">Submit</button>
+        </div>
+
+    </form>
+</body>
