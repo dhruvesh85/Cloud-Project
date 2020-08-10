@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Team-07- Project Student Site</title>
+
+  <!-- Viewport mobile tag for sensible mobile support -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <%/* If you want to discourage search engines from indexing this site, uncomment the following line: */%>
+  <%/* <meta name="robots" content="noindex"> */%>
+
+  <!--STYLES-->
+  <link rel="stylesheet" href="/styles/importer.css">
+  <!--STYLES END-->
+  <style>
+    table,
+    th,
+    td {
+      padding: 10px;
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+
+    table {
+      margin: 5px auto;
+    }
+
+    form {
+      display: inline-block;
+    }
+
+    h4 {
+      text-align: center;
+    }
+
+    .container {
+      margin-top: 15px;
+    }
+  </style>
+</head>
+
+<body>
+  <nav style="background-color: #5ca4da; color: white;" class="navbar navbar-expand-lg navbar-light ">
+    <a class="navbar-brand" href="/">
+      <img src="/images/seven.svg" width="30" height="30" alt="">
+    </a>
+    <a class="navbar-brand" href="/" style="color: white;">Team-07- Project Student Site</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/dev/signin" style="color: white;">Logout</a>
+        </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link" href="/dev/searchPart" style="color: white;">Search Part</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/dev/insertPart" style="color: white;">Insert Part</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/dev/viewOrder" style="color: white;">View Job Order</a>
+        </li> -->
+      </ul>
+    </div>
+  </nav>
+  <div class="container-fluid">
+    <h4>Courses Enrolled</h4>
+    <br>
+    <table class="table table-hover">
+      <thead class="thead-dark">
+        <tr>
+          <th> Course Id</th>
+          <th> Course Name</th>
+          <th> Action</th>
+          <th> Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% courses.forEach(function(course){ %>
+        <tr>
+          <td><%= course.courseId %></td>
+          <td><%= course.courseName %></td>
+          <td>
+            <form method="POST" action="/dev/viewAnnouncement/<%= course.id %>/<%= course.courseId %>">
+              <button class="btn btn-primary">view Announcement</button>
+            </form>
+          </td>
+          <td>
+            <form method="POST" action="/dev/dropCourse/<%= course.id %>/<%= course.courseId %>">
+              <button class="btn btn-primary">drop</button>
+            </form>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
