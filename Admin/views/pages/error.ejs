@@ -1,0 +1,21 @@
+<div>
+    <div style="text-align: center;">
+        <h1 style=" text-align: center;color: red;"> Error !!!</h1>
+        <h2 style=" text-align: center;"> <%= result %></h2>
+            <button class="btn btn-primary" onclick="myFunction('<%= page %>')">Go Back</button>
+    </div>
+</div>
+<script>
+    function myFunction(page) {
+        console.log(page)
+        if(page == 'insertCourse'){
+        window.location.replace('/insertCourse');
+        }if(page == 'login'){
+        window.location.replace('/');
+        }if(page == 'register'){
+        window.location.replace('/registerUser');
+        }else{
+            window.location.replace('/getCourse');    
+        }
+    }
+</script>

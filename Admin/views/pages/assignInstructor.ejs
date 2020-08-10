@@ -1,0 +1,50 @@
+<body>
+    <script type="text/javascript">
+        async function fetchText() {
+          var apiUrl = "http://instructor-dev.us-east-1.elasticbeanstalk.com/getInstructor";
+          let response = await fetch(apiUrl);
+          let data = await response.text();
+          data = JSON.parse(data)
+          let instructor = data.instructor;
+          console.log(instructor)
+          var select = document.getElementById("instructorId");
+          for (var i = 0; i < instructor.length; i++) {
+            var opt = instructor[i].id;
+            var el = document.createElement("option");
+            el.textContent = opt;
+            el.value = opt;
+            select.appendChild(el);
+          }
+        }
+        fetchText();
+      </script>
+    
+    <h1> Assign Instructor !</h1>
+    <form action="/assignInstructor" method="POST">
+        
+        <div class="form-group">
+            <label for="courseId">Course Id</label>
+            <input type="text" class="form-control" name="courseId" id="courseId" placeholder="Enter CourseId" required
+                value="<%= courseId%>" readonly="readonly">
+        </div>
+
+        <div class="form-group">
+            <label for="courseName">Course Name</label>
+            <input type="text" class="form-control" name="courseName" id="courseName" placeholder="Enter courseName" required
+                value="<%= courseName%>" readonly="readonly">
+        </div>
+
+        <div class="form-group">
+            <label for="instructorId">Instructor Id</label>
+            <select id="instructorId" name="instructorId" class="form-control" required>
+              <option hidden>Select Instructor Id</option>
+            </select>
+        </div>
+  
+
+        <div class="form-group">
+            <button class="btn btn-primary">Submit</button>
+        </div>
+
+    </form>
+</body>
